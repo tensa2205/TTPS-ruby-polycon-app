@@ -23,5 +23,9 @@ module Polycon
             #puts temp_object
             #Imprime doble si saco el comentario de arriba
         end
+        def self.cancel_appointment(folder, file_name)
+            path_to_file = folder << "/" <<file_name << ".paf"
+            File.delete(path_to_file) if File.exist?(path_to_file)
+        end
     end
 end
