@@ -1,6 +1,6 @@
 module Polycon
     module AppointmentUtils
-        
+        require 'fileutils'
         #Me quedé con el create.
         def self.create_appointment_file(folder, file_name, appointment_object)
             new_file = File.new(folder << "/" <<file_name << ".paf", "w")
@@ -26,6 +26,10 @@ module Polycon
         def self.cancel_appointment(folder, file_name)
             path_to_file = folder << "/" <<file_name << ".paf"
             File.delete(path_to_file) if File.exist?(path_to_file)
+        end
+
+        def self.cancel_all_appointments_from_professional_with_folder(folder)
+            FileUtils.rm Dir.glob(folder << "/" <<"*.paf")
         end
     end
 end

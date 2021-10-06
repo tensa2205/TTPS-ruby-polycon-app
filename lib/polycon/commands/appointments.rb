@@ -53,9 +53,9 @@ module Polycon
         def call(date:, professional:)
           #warn "TODO: Implementar detalles de un turno con fecha '#{date}' y profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
 
-          #Chequear que exista la carpeta polycon en el home del usuario. Si no existe se devuelve un warn y no se sigue la ejecución.
+          #Chequear que exista la carpeta polycon en el home del usuario. Si no existe se devuelve un abort y no se sigue la ejecución.
           abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
-          #Si existe, se busca carpeta del profesional en Dir.home + "/" + ".polycon", Si no existe el profesional, se devuelve un warn.
+          #Si existe, se busca carpeta del profesional en Dir.home + "/" + ".polycon", Si no existe el profesional, se devuelve un abort.
           abort("El profesional ingresado no existe en nuestro sistema, quizás lo escribiste mal") unless Polycon::ProfessionalUtils.professional_folder_exists?(professional)
           #Si existe, se busca dentro de la carpeta un archivo con el nombre date.paf
           abort("No existe un turno para ese día y hora.") unless Polycon::AppointmentUtils.appointment_file_exists?(
@@ -85,9 +85,9 @@ module Polycon
         def call(date:, professional:)
           #warn "TODO: Implementar borrado de un turno con fecha '#{date}' y profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
           
-          #Chequear que exista la carpeta polycon en el home del usuario. Si no existe se devuelve un warn y no se sigue la ejecución.
+          #Chequear que exista la carpeta polycon en el home del usuario. Si no existe se devuelve un abort y no se sigue la ejecución.
           abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
-          #Buscar carpeta del profesional en Dir.home + "/" + ".polycon". Si no existe el profesional se devuelve un warn.
+          #Buscar carpeta del profesional en Dir.home + "/" + ".polycon". Si no existe el profesional se devuelve un abort.
           abort("El profesional ingresado no existe en nuestro sistema, quizás lo escribiste mal") unless Polycon::ProfessionalUtils.professional_folder_exists?(professional)
           #Buscar turno en la carpeta, si no existe el turno se aborta.
           abort("El turno ingresado no existe, capaz lo escribiste mal") unless Polycon::AppointmentUtils.appointment_file_exists?(
@@ -113,7 +113,18 @@ module Polycon
         ]
 
         def call(professional:)
-          warn "TODO: Implementar borrado de todos los turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #warn "TODO: Implementar borrado de todos los turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          
+          #Chequear que exista la carpeta polycon en el home del usuario. Si no existe se devuelve un abort y no se sigue la ejecución.
+          abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
+
+          #Buscar carpeta del profesional en Dir.home + "/" + ".polycon". Si no existe el profesional se devuelve un abort.
+          abort("El profesional ingresado no existe en nuestro sistema, quizás lo escribiste mal") unless Polycon::ProfessionalUtils.professional_folder_exists?(professional)
+
+          #Borrar tutti.
+          Polycon::AppointmentUtils.cancel_all_appointments_from_professional_with_folder(
+            Polycon::ProfessionalUtils.path_professional_folder(professional)
+          )
         end
       end
 
