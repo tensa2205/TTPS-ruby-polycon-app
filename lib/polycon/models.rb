@@ -1,7 +1,7 @@
 module Polycon
     module Models
-        autoload :Appointment, './models/appointment.rb'
+        autoload :Appointment, 'polycon/models/appointment'
     end
 end
 
-Polycon::Models::Appointment #Llegada a la clase Appointment.
+#Polycon::Models::Appointment #Llegada a la clase Appointment. lib\polycon\models\appointment.rb
