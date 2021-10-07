@@ -33,5 +33,5 @@ module Polycon
 end
 
 #Testing purposes.
-a = Polycon::Models::Appointment.new("2021-09-16 13:00", "Alma Estevez","Carlos", "Carlosi" ,2213334567)
-puts a.to_s
+#a = Polycon::Models::Appointment.new("2021-09-16 13:00", "Alma Estevez","Carlos", "Carlosi" ,2213334567)
+#puts a.to_s

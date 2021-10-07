@@ -17,6 +17,12 @@ module Polycon
                 date.strftime("%F %R")
             end
 
+            def self.convert_to_string_from_file_convention(filename)
+                #Recibe YYYY-MM-DD_HH-min -> sin el .paf
+                filename = filename.gsub!(/_/,' ')
+                filename[filename.rindex("-")] = ":"
+                filename
+            end
             def self.convert_to_file_convention_from_string(string)
                 #AAAA-MM-DD_HH-II
                 aux_date = self.format_string_to_date(string)

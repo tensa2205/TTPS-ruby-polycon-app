@@ -15,16 +15,15 @@ module Polycon
           '"2021-09-16 13:00" --professional="Alma Estevez" --name=Carlos --surname=Carlosi --phone=2213334567'
         ]
 
-        def call(date:, professional:, name:, surname:, phone:, notes: nil)
-          #puts Polycon::Utils.format_string_to_date(date)
-          #warn "TODO: Implementar creación de un turno con fecha '#{date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
-          
+        def call(date:, professional:, name:, surname:, phone:, notes: nil)  
           #Chequear si existe directorio .polycon, si no existe se crea, sino no se hace nada.
           Polycon::Utils.create_polycon_root unless Polycon::Utils.polycon_root_exists?
           
           #Buscar carpeta del profesional, la idea es encontrar strings parecidos perhaps. Si no se encuentra se crea
           Polycon::ProfessionalUtils.create_professional_folder(professional) unless Polycon::ProfessionalUtils.professional_folder_exists?(professional)
           
+          #Se busca que no exista un archivo con misma fecha y hora
+          #COMPLETAR
           #Se crea un objeto appointment
           new_appointment = Polycon::Models::Appointment.new(Polycon::Utils.format_string_to_date(date), Polycon::ProfessionalUtils.beautify_professional_name(professional), name, surname, phone, notes)
           
@@ -34,8 +33,6 @@ module Polycon
                                                             Polycon::Utils.convert_to_file_convention(new_appointment.date_as_string) ,
                                                             new_appointment
                                                           )
-          
-          #Se avisa que se creó
           warn "CREADO"
         end
       end
@@ -51,8 +48,6 @@ module Polycon
         ]
 
         def call(date:, professional:)
-          #warn "TODO: Implementar detalles de un turno con fecha '#{date}' y profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
-
           #Chequear que exista la carpeta polycon en el home del usuario. Si no existe se devuelve un abort y no se sigue la ejecución.
           abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
           #Si existe, se busca carpeta del profesional en Dir.home + "/" + ".polycon", Si no existe el profesional, se devuelve un abort.
@@ -83,8 +78,6 @@ module Polycon
         ]
 
         def call(date:, professional:)
-          #warn "TODO: Implementar borrado de un turno con fecha '#{date}' y profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
-          
           #Chequear que exista la carpeta polycon en el home del usuario. Si no existe se devuelve un abort y no se sigue la ejecución.
           abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
           #Buscar carpeta del profesional en Dir.home + "/" + ".polycon". Si no existe el profesional se devuelve un abort.
@@ -112,9 +105,7 @@ module Polycon
           '"Alma Estevez" # Cancels all appointments for professional Alma Estevez',
         ]
 
-        def call(professional:)
-          #warn "TODO: Implementar borrado de todos los turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
-          
+        def call(professional:)          
           #Chequear que exista la carpeta polycon en el home del usuario. Si no existe se devuelve un abort y no se sigue la ejecución.
           abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
 
@@ -139,8 +130,12 @@ module Polycon
           '"Alma Estevez" --date="2021-09-16" # Lists appointments for Alma Estevez on the specified date'
         ]
 
-        def call(professional:)
-          warn "TODO: Implementar listado de turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+        def call(professional:, date: nil) #Most likely que acá no estaría viendo el parámetro date
+          #Chequear primero el .polycon folder
+          abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
+          #Verificar la existencia del profesional
+          abort("El profesional ingresado no existe en nuestro sistema, quizás lo escribiste mal") unless Polycon::ProfessionalUtils.professional_folder_exists?(professional)
+          Polycon::ProfessionalUtils.list_all_professional_appointments(professional, date)
         end
       end
 
@@ -156,7 +151,23 @@ module Polycon
         ]
 
         def call(old_date:, new_date:, professional:)
-          warn "TODO: Implementar cambio de fecha de turno con fecha '#{old_date}' para que pase a ser '#{new_date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #warn "TODO: Implementar cambio de fecha de turno con fecha '#{old_date}' para que pase a ser '#{new_date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #Chequeo carpeta root, si no existe, abort.
+          abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
+          #Chequeo carpeta del profesional
+          abort("El profesional ingresado no existe en nuestro sistema, quizás lo escribiste mal") unless Polycon::ProfessionalUtils.professional_folder_exists?(professional)
+          #Chequeo existencia del archivo viejo
+          abort("El turno ingresado no existe, capaz lo escribiste mal") unless Polycon::AppointmentUtils.appointment_file_exists?(
+            Polycon::ProfessionalUtils.path_professional_folder(professional) , 
+            Polycon::Utils.convert_to_file_convention_from_string(old_date)
+          )
+          #Rename del archivo viejo
+          Polycon::AppointmentUtils.reschedule(
+            Polycon::ProfessionalUtils.path_professional_folder(professional),
+            Polycon::Utils.convert_to_file_convention_from_string(old_date),
+            Polycon::Utils.convert_to_file_convention_from_string(new_date)
+          )
+          warn("Turno reprogramado exitosamente")
         end
       end
 
@@ -178,6 +189,11 @@ module Polycon
 
         def call(date:, professional:, **options)
           warn "TODO: Implementar modificación de un turno de la o el profesional '#{professional}' con fecha '#{date}', para cambiarle la siguiente información: #{options}.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #Chequear carpeta root, si no existe -> abort.
+          #Chequear carpeta profesional, si no existe -> abort.
+          #Comprobar existencia del archivo, si no existe -> abort.
+          #Cambiar datos específicos del archivo.
+          puts options[:name] #Acceso a los datos usando :nombreClave
         end
       end
     end
