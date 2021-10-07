@@ -19,6 +19,7 @@ module Polycon
           #Chequear si existe directorio .polycon, si no existe se crea, sino no se hace nada.
           Polycon::Utils.create_polycon_root unless Polycon::Utils.polycon_root_exists?
           
+          #Puede que crear la carpeta del profesional sea INNECESARIO....
           #Buscar carpeta del profesional, la idea es encontrar strings parecidos perhaps. Si no se encuentra se crea
           Polycon::ProfessionalUtils.create_professional_folder(professional) unless Polycon::ProfessionalUtils.professional_folder_exists?(professional)
           
@@ -57,6 +58,7 @@ module Polycon
             Polycon::ProfessionalUtils.path_professional_folder(professional) , 
             Polycon::Utils.convert_to_file_convention_from_string(date)
           )
+
           #Si se encuentra, se deberia volcar la información del archivo en un objeto appointment y usar el to_s
           Polycon::AppointmentUtils.show_appointment_data(
             Polycon::ProfessionalUtils.path_professional_folder(professional),
@@ -116,6 +118,7 @@ module Polycon
           Polycon::AppointmentUtils.cancel_all_appointments_from_professional_with_folder(
             Polycon::ProfessionalUtils.path_professional_folder(professional)
           )
+          warn "Turnos borrados"
         end
       end
 

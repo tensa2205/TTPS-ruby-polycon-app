@@ -24,7 +24,7 @@ module Polycon
             path = assemble_path_file(folder, file_name)
             content = IO.readlines(path)
             temp_object = Polycon::Models::Appointment.new(date_object, professional_beautified_name, content[1], content[0], content[2], content[3])
-            #puts temp_object
+            puts temp_object
             #Imprime doble si saco el comentario de arriba
         end
         def self.cancel_appointment(folder, file_name)

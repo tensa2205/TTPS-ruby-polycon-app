@@ -1,4 +1,5 @@
 require 'date'
+require 'fileutils'
 module Polycon
         module Utils #Métodos de ayuda van acá
 
@@ -59,6 +60,19 @@ module Polycon
             def self.beautify_string_date(string)
                 self.format_date_to_string(self.format_string_to_date(string))
             end
+
+            def self.delete_folder_using_path(path)
+                FileUtils.rm_rf(path)
+            end
+
+            def self.rename_folder(old_path, new_path)
+                File.rename(old_path, new_path)
+            end
+
+            def self.get_all_folders_from_path(path)
+                Dir.glob(path + "/*").select { |entry| File.directory? entry }
+            end
+
         end
 end
 #dateObject = Polycon::Utils.format_string_to_date("2021-09-16 13:00")
@@ -66,4 +80,4 @@ end
 #puts Polycon::Utils.format_date_to_string(dateObject)
 #puts Polycon::Utils.convert_to_file_convention(Polycon::Utils.format_date_to_string(dateObject))
 #puts Polycon::Utils.beautify_string_date("2021-09-11")
-
+#puts Polycon::Utils.get_all_folders_from_path(Dir.home + "/" + ".polycon")

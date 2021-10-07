@@ -16,13 +16,13 @@ module Polycon
                 @date.strftime("%F %R")
             end
             def to_s
-                "Hola, tengo los siguientes datos:\n
+                "Datos del turno:\n
                     Fecha : %s \n
                     Profesional : %s \n
                     Nombre : %s \n
                     Apellido : %s \n
                     Telefono : %s \n
-                " % [@date, @professional, @name, @surname, @phone]
+                " % [date_as_string, @professional, @name, @surname, @phone]
             end
 
             def to_a

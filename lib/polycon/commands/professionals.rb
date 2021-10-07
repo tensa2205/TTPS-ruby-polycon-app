@@ -12,7 +12,11 @@ module Polycon
         ]
 
         def call(name:, **)
-          warn "TODO: Implementar creación de un o una profesional con nombre '#{name}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #Chequear root polycon, si no existe se crea.
+          Polycon::Utils.create_polycon_root unless Polycon::Utils.polycon_root_exists?
+          #Crear el profesional (crear su carpeta basically)
+          Polycon::ProfessionalUtils.create_professional_folder(name)
+          warn "CREADO"
         end
       end
 
@@ -27,7 +31,11 @@ module Polycon
         ]
 
         def call(name: nil)
-          warn "TODO: Implementar borrado de la o el profesional con nombre '#{name}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #Chequear root polycon, si no existe se aborta.
+          abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
+          #Chequear que exista el profesional, si existe, se comprueba que no tenga turnos y ahí recién se borra -> se deberian tirar excepciones
+          Polycon::ProfessionalUtils.fire_professional(name)
+          warn "Profesional despedido"
         end
       end
 
@@ -39,7 +47,10 @@ module Polycon
         ]
 
         def call(*)
-          warn "TODO: Implementar listado de profesionales.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #Chequear root polycon, si no existe se aborta
+          abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
+          #Listar los profesionales, si no hay ninguno se tira un mensaje
+          Polycon::ProfessionalUtils.list_all_professionals
         end
       end
 
@@ -54,7 +65,13 @@ module Polycon
         ]
 
         def call(old_name:, new_name:, **)
-          warn "TODO: Implementar renombrado de profesionales con nombre '#{old_name}' para que pase a llamarse '#{new_name}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #Chequear root polycon, si no existe se aborta.
+          abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
+          #Chequear que exista el profesional.
+          abort("No existe el profesional ingresado") unless Polycon::ProfessionalUtils.professional_folder_exists?(old_name)
+          #Si existe, se renombra
+          Polycon::ProfessionalUtils.rename_professional(old_name, new_name)
+          warn "Se cambió el nombre del profesional"
         end
       end
     end
