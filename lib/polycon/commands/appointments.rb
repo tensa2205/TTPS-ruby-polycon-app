@@ -191,12 +191,25 @@ module Polycon
         ]
 
         def call(date:, professional:, **options)
-          warn "TODO: Implementar modificación de un turno de la o el profesional '#{professional}' con fecha '#{date}', para cambiarle la siguiente información: #{options}.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
           #Chequear carpeta root, si no existe -> abort.
+          abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
           #Chequear carpeta profesional, si no existe -> abort.
+          abort("El profesional ingresado no existe en nuestro sistema, quizás lo escribiste mal") unless Polycon::ProfessionalUtils.professional_folder_exists?(professional)
           #Comprobar existencia del archivo, si no existe -> abort.
+          abort("El turno ingresado no existe, capaz lo escribiste mal") unless Polycon::AppointmentUtils.appointment_file_exists?(
+            Polycon::ProfessionalUtils.path_professional_folder(professional) , 
+            Polycon::Utils.convert_to_file_convention_from_string(date)
+          )
+          #Chequea que se recibieron datos
+          abort("No se han recibido datos nuevos para editar") unless !options.empty?
           #Cambiar datos específicos del archivo.
-          puts options[:name] #Acceso a los datos usando :nombreClave
+          Polycon::AppointmentUtils.edit_appointment(
+            Polycon::ProfessionalUtils.path_professional_folder(professional), 
+            Polycon::Utils.convert_to_file_convention_from_string(date),
+            Polycon::Utils.format_string_to_date(date),
+            Polycon::ProfessionalUtils.beautify_professional_name(professional),
+            options
+          )
         end
       end
     end

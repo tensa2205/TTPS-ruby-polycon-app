@@ -35,14 +35,18 @@ module Polycon
         def self.cancel_all_appointments_from_professional_with_folder(folder)
             FileUtils.rm Dir.glob(folder << "/" <<"*.paf")
         end
-
-        def self.edit_appointment(folder, file_name, parameters)
+        #DEJÉ ACA
+        def self.edit_appointment(folder, file_name, date_obj, professional_beautified_name, parameters)
             file_path = assemble_path_file(folder, file_name)
-            File.open(file_path, "r") do |f|
-                f.each_line do |line|
-                    puts line
-                end
-            end
+            file_content = IO.readlines(file_path) #0 -> apellido, 1 -> nombre, 2 -> Teléfono, 3 -> Notas
+            file_content[0] = parameters[:surname] unless !parameters.has_key?(:surname)
+            file_content[1] = parameters[:name] unless !parameters.has_key?(:name)
+            file_content[2] = parameters[:phone] unless !parameters.has_key?(:phone)
+            file_content[3] = parameters[:notes] unless !parameters.has_key?(:notes)
+            edited_appointment = Polycon::Models::Appointment.new(date_obj, professional_beautified_name, file_content[1], file_content[0], file_content[2], file_content[3])
+            cancel_appointment(folder, file_name)
+            create_appointment_file(folder, file_name, edited_appointment)
+            #puts file_content
         end
 
         def self.reschedule(folder, old_filename, new_filename)
