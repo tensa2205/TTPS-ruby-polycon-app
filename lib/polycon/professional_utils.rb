@@ -63,7 +63,7 @@ module Polycon
             folders_array.map {|folder| folder.slice(foldername_startpos, (folder.length - 1)).gsub(/_/,' ') }
         end
         def self.list_all_professionals()
-            folders = Polycon::Utils.get_all_folders_from_path(Dir.home << "/" << ".polycon")
+            folders = Polycon::Utils.get_all_folders_from_path(Dir.home + "/" + ".polycon")
             raise StandardError, "No hay profesionales contratados", caller unless !folders.empty?
             puts ".::Profesionales de la policlínica::."
             puts convert_paths_to_professional_list(folders)

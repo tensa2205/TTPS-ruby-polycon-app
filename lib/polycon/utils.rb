@@ -47,7 +47,6 @@ module Polycon
                     DateTime.parse(stringDate)
                 rescue ArgumentError
                     STDERR.puts "La fecha recibida tiene un formato invalido"
-                    #El exit a futuro deberia quitarse
                     exit
                 end
             end

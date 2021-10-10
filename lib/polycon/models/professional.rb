@@ -1,7 +1,6 @@
 module Polycon
     module Models
         class Professional
-            #Todos los campos de professional son modificables
             attr_accessor :name
             def initialize(name)
                 @name = name

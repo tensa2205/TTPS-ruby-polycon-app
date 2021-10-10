@@ -1,17 +1,4 @@
 # Polycon
-
-Plantilla para comenzar con el Trabajo Práctico Integrador de la cursada 2021 de la materia
-Taller de Tecnologías de Producción de Software - Opción Ruby, de la Facultad de Informática
-de la Universidad Nacional de La Plata.
-
-Polycon es una herramienta para gestionar los turnos y profesionales de un policonsultorio.
-
-Este proyecto es simplemente una plantilla para comenzar a implementar la herramienta e
-intenta proveer un punto de partida para el desarrollo, simplificando el _bootstrap_ del
-proyecto que puede ser una tarea que consume mucho tiempo y conlleva la toma de algunas
-decisiones que más adelante pueden tener efectos tanto positivos como negativos en el
-proyecto.
-
 ## Uso de `polycon`
 
 Para ejecutar el comando principal de la herramienta se utiliza el script `bin/polycon`,
@@ -33,79 +20,80 @@ O simplemente:
 $ bin/polycon [args]
 ```
 
-Si se agrega el directorio `bin/` del proyecto a la variable de ambiente `PATH` de la shell,
-el comando puede utilizarse sin prefijar `bin/`:
-
-```bash
-# Esto debe ejecutarse estando ubicad@ en el directorio raiz del proyecto, una única vez
-# por sesión de la shell
-$ export PATH="$(pwd)/bin:$PATH"
-$ polycon [args]
+## Listado de comandos de professionals
+Listado de cada comando junto a su propósito:
+```
+$ ruby bin/polycon professionals
+```
+Crear profesional:
+```
+$ ruby bin/polycon professionals "Nombre completo del profesional"
 ```
 
-> Notá que para la ejecución de la herramienta, es necesario tener una versión reciente de
-> Ruby (2.6 o posterior) y tener instaladas sus dependencias, las cuales se manejan con
-> Bundler. Para más información sobre la instalación de las dependencias, consultar la
-> siguiente sección ("Desarrollo").
-
-Documentar el uso para usuarios finales de la herramienta queda fuera del alcance de esta
-plantilla y **se deja como una tarea para que realices en tu entrega**, pisando el contenido
-de este archivo `README.md` o bien en uno nuevo. Ese archivo deberá contener cualquier
-documentación necesaria para entender el funcionamiento y uso de la herramienta que hayas
-implementado, junto con cualquier decisión de diseño del modelo de datos que consideres
-necesario documentar.
-
-## Desarrollo
-
-Esta sección provee algunos tips para el desarrollo de tu entrega a partir de esta
-plantilla.
-
-### Instalación de dependencias
-
-Este proyecto utiliza Bundler para manejar sus dependencias. Si aún no sabés qué es eso
-o cómo usarlo, no te preocupes: ¡lo vamos a ver en breve en la materia! Mientras tanto,
-todo lo que necesitás saber es que Bundler se encarga de instalar las dependencias ("gemas")
-que tu proyecto tenga declaradas en su archivo `Gemfile` al ejecutar el siguiente comando:
-
-```bash
-$ bundle install
+Despedir profesional (no se pueden despedir profesionales con turnos pendientes):
+```
+$ ruby bin/polycon professionals "Nombre completo del profesional a despedir"
 ```
 
-> Nota: Bundler debería estar disponible en tu instalación de Ruby, pero si por algún
-> motivo al intentar ejecutar el comando `bundle` obtenés un error indicando que no se
-> encuentra el comando, podés instalarlo mediante el siguiente comando:
->
-> ```bash
-> $ gem install bundler
-> ```
+Listar profesionales de la policlínica:
+```
+$ ruby bin/polycon professionals list
+```
 
-Una vez que la instalación de las dependencias sea exitosa (esto deberías hacerlo solamente
-cuando estés comenzando con la utilización del proyecto), podés comenzar a probar la
-herramienta y a desarrollar tu entrega.
+Renombrar profesional:
+```
+$ ruby bin/polycon professionals "Nombre completo original" "Nombre completo nuevo"
+```
 
-### Estructura de la plantilla
+## Listado de comandos de appointments
+Listado de cada comando junto a su propósito:
+```
+$ ruby bin/polycon appointments
+```
 
-El proyecto te provee una estructura inicial en la cual podés basarte para implementar tu
-entrega. Esta estructura no es necesariamente rígida, pero tené en cuenta que modificarla
-puede requerir algún trabajo adicional de tu parte.
+Crear turno:
+```
+$ ruby bin/polycon appointments create "Fecha del turno en formato YYYY-MM-DD HORA:MINUTOS" --professional="Nombre completo del profesional" --name="Nombre paciente" --surname="Apellido paciente" --phone="Telefono del paciente" --notes="Notas opcionales"
+```
 
-* `lib/`: directorio que contiene todas las clases del modelo y de soporte para la ejecución
-  del programa `bin/polycon`.
-  * `lib/polycon.rb` es la declaración del namespace `Polycon`, y las directivas de carga
-    de clases o módulos que estén contenidos directamente por éste (`autoload`).
-  * `lib/polycon/` es el directorio que representa el namespace `Polycon`. Notá la convención
-    de que el uso de un módulo como namespace se refleja en la estructura de archivos del
-    proyecto como un directorio con el mismo nombre que el archivo `.rb` que define el módulo,
-    pero sin la terminación `.rb`. Dentro de este directorio se ubicarán los elementos del
-    proyecto que estén bajo el namespace `Polycon` - que, también por convención y para
-    facilitar la organización, deberían ser todos. Es en este directorio donde deberías
-    ubicar tus clases de modelo, módulos, clases de soporte, etc. Tené en cuenta que para
-    que todo funcione correctamente, seguramente debas agregar nuevas directivas de carga en la
-    definición del namespace `Polycon` (o dónde corresponda, según tus decisiones de diseño).
-  * `lib/polycon/commands.rb` y `lib/polycon/commands/*.rb` son las definiciones de comandos
-    de `dry-cli` que se utilizarán. En estos archivos es donde comenzarás a realizar la
-    implementación de las operaciones en sí, que en esta plantilla están provistas como
-    simples disparadores.
-  * `lib/polycon/version.rb` define la versión de la herramienta, utilizando [SemVer](https://semver.org/lang/es/).
-* `bin/`: directorio donde reside cualquier archivo ejecutable, siendo el más notorio `polycon`
-  que se utiliza como punto de entrada para el uso de la herramienta.
+Mostrar datos de un turno:
+```
+$ ruby bin/polycon appointments show "Fecha del turno en formato YYYY-MM-DD HORA:MINUTOS" --professional="Nombre completo del profesional"
+```
+
+Cancelar turno:
+```
+$ ruby bin/polycon appointments cancel "Fecha del turno en formato YYYY-MM-DD HORA:MINUTOS" --professional="Nombre completo del profesional"
+```
+
+Cancelar todos los turnos de un profesional:
+```
+$ ruby bin/polycon appointments cancel-all "Nombre completo del profesional"
+```
+
+Listar turnos de un profesional:
+```
+$ ruby bin/polycon appointments list "Nombre completo del profesional"
+```
+
+Reprogramar turno:
+```
+$ ruby bin/polycon appointments reschedule "Fecha vieja en formato YYYY-MM-DD HORA:MINUTOS" "Fecha nueva en formato YYYY-MM-DD HORA:MINUTOS" --professional="Nombre completo del profesional"
+```
+
+Editar información de un turno:
+```
+#Los parámetros: name, surname, phone y notes son de caracter opcional.
+#Solo esa información es modificable, pero al ser opcional, podemos usar cualquiera de los 4 parámetros para hacer modificaciones.
+$ ruby bin/polycon appointments "Fecha del turno en formato YYYY-MM-DD HORA:MINUTOS" --professional="Nombre completo del profesional" --name="Nombre paciente" --surname="Apellido paciente" --phone="Telefono del paciente" --notes="Notas opcionales"
+```
+
+## Diseño
+
+Basé la mayor parte de la app en hacer código reutilizable en módulos. Esta decisión la tomé por el puro hecho de probar aún más a fondo lo necesario para desarrollar en base a módulos. 
+
+Sí, usé modelo de clases, por ejemplo la clase Appointment, pero esto meramente lo hice para apoyarme sobre ciertas funcionalidades que me proveen las instancias de objetos como puede ser obtener representaciones de todos los atributos en un método to_s o hacer que los atributos de un objeto sean recorridos como si de un array se tratara usando el método to_a.
+
+A remarcar, no le encontré un uso significativo a la clase Professional ya que toda la funcionalidad respectiva a esa parte la pude resolver únicamente usando módulos, dejé la clase ya que es probable que para la segunda entrega si la necesite.
+
+¿Por qué desarrollar usando módulos? Lo que más me interesó de desarrollar en base a módulos fue la reusabilidad que me generaba mientras iba haciendo nuevas funcionalidades. Me pasaba que hubo momentos donde al incluir nuevas funcionalidades pensaba en "bueno, ahora necesito esto" pero me encontraba con que esa necesidad ya la había resuelto anteriormente y ahora podía reusarla sin ningún problema, agilizando así el desarrollo.
