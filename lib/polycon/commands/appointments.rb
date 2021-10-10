@@ -15,26 +15,29 @@ module Polycon
           '"2021-09-16 13:00" --professional="Alma Estevez" --name=Carlos --surname=Carlosi --phone=2213334567'
         ]
 
-        def call(date:, professional:, name:, surname:, phone:, notes: nil)  
-          #Chequear si existe directorio .polycon, si no existe se crea, sino no se hace nada.
-          Polycon::Utils.create_polycon_root unless Polycon::Utils.polycon_root_exists?
-          
-          #Puede que crear la carpeta del profesional sea INNECESARIO....
-          #Buscar carpeta del profesional, la idea es encontrar strings parecidos perhaps. Si no se encuentra se crea
-          Polycon::ProfessionalUtils.create_professional_folder(professional) unless Polycon::ProfessionalUtils.professional_folder_exists?(professional)
-          
-          #Se busca que no exista un archivo con misma fecha y hora
-          #COMPLETAR
-          #Se crea un objeto appointment
-          new_appointment = Polycon::Models::Appointment.new(Polycon::Utils.format_string_to_date(date), Polycon::ProfessionalUtils.beautify_professional_name(professional), name, surname, phone, notes)
-          
-          #Se crea y llena un archivo de texto plano con extensión .paf en la carpeta del profesional con nombre igual al string de la fecha.
-          Polycon::AppointmentUtils.create_appointment_file(
-                                                            Polycon::ProfessionalUtils.path_professional_folder(professional) , 
-                                                            Polycon::Utils.convert_to_file_convention(new_appointment.date_as_string) ,
-                                                            new_appointment
-                                                          )
-          warn "CREADO"
+        def call(date:, professional:, name:, surname:, phone:, notes: nil)
+            abort("Algun parámetro de los recibidos tiene un formato erróneo") unless !Polycon::Utils.check_if_any_string_is_empty(name, surname, phone)
+            #Chequear si existe directorio .polycon, si no existe se crea, sino no se hace nada.
+            Polycon::Utils.create_polycon_root unless Polycon::Utils.polycon_root_exists?
+
+            #Chequear si existe el profesional, si no existe se tira error
+            abort("Profesional inexistente, capaz lo escribió mal") unless Polycon::ProfessionalUtils.professional_folder_exists?(professional)
+
+            #Se busca que no exista un archivo con misma fecha y hora
+            abort("Disculpe, esa fecha/hora ya está ocupada") unless !Polycon::AppointmentUtils.appointment_file_exists?(
+              Polycon::ProfessionalUtils.path_professional_folder(professional),
+              Polycon::Utils.convert_to_file_convention_from_string(date)  
+            )
+            #Se crea un objeto appointment
+            new_appointment = Polycon::Models::Appointment.new(Polycon::Utils.format_string_to_date(date), Polycon::ProfessionalUtils.beautify_professional_name(professional), name, surname, phone, notes)
+            
+            #Se crea y llena un archivo de texto plano con extensión .paf en la carpeta del profesional con nombre igual al string de la fecha.
+            Polycon::AppointmentUtils.create_appointment_file(
+                                                              Polycon::ProfessionalUtils.path_professional_folder(professional) , 
+                                                              Polycon::Utils.convert_to_file_convention(new_appointment.date_as_string) ,
+                                                              new_appointment
+                                                            )
+            warn "CREADO"
         end
       end
 
@@ -54,7 +57,7 @@ module Polycon
           #Si existe, se busca carpeta del profesional en Dir.home + "/" + ".polycon", Si no existe el profesional, se devuelve un abort.
           abort("El profesional ingresado no existe en nuestro sistema, quizás lo escribiste mal") unless Polycon::ProfessionalUtils.professional_folder_exists?(professional)
           #Si existe, se busca dentro de la carpeta un archivo con el nombre date.paf
-          abort("No existe un turno para ese día y hora.") unless Polycon::AppointmentUtils.appointment_file_exists?(
+          abort("No existe un turno para esa fecha y hora con dicho profesional.") unless Polycon::AppointmentUtils.appointment_file_exists?(
             Polycon::ProfessionalUtils.path_professional_folder(professional) , 
             Polycon::Utils.convert_to_file_convention_from_string(date)
           )
@@ -118,7 +121,7 @@ module Polycon
           Polycon::AppointmentUtils.cancel_all_appointments_from_professional_with_folder(
             Polycon::ProfessionalUtils.path_professional_folder(professional)
           )
-          warn "Turnos borrados"
+          warn "Turnos cancelados"
         end
       end
 
@@ -163,6 +166,11 @@ module Polycon
           abort("El turno ingresado no existe, capaz lo escribiste mal") unless Polycon::AppointmentUtils.appointment_file_exists?(
             Polycon::ProfessionalUtils.path_professional_folder(professional) , 
             Polycon::Utils.convert_to_file_convention_from_string(old_date)
+          )
+          #Chequeo que la nueva fecha no se superponga con un turno ya existente.
+          abort("Disculpe, esa fecha/hora ya está ocupada") unless !Polycon::AppointmentUtils.appointment_file_exists?(
+            Polycon::ProfessionalUtils.path_professional_folder(professional),
+            Polycon::Utils.convert_to_file_convention_from_string(new_date)  
           )
           #Rename del archivo viejo
           Polycon::AppointmentUtils.reschedule(

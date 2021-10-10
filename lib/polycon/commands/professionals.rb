@@ -14,9 +14,13 @@ module Polycon
         def call(name:, **)
           #Chequear root polycon, si no existe se crea.
           Polycon::Utils.create_polycon_root unless Polycon::Utils.polycon_root_exists?
-          #Crear el profesional (crear su carpeta basically)
-          Polycon::ProfessionalUtils.create_professional_folder(name)
-          warn "CREADO"
+          #Se crea el profesional si no existe
+          unless Polycon::ProfessionalUtils.professional_folder_exists?(name)
+            Polycon::ProfessionalUtils.create_professional_folder(name) 
+            warn "CREADO"
+          else
+            warn "Profesional ya contratado"
+          end
         end
       end
 

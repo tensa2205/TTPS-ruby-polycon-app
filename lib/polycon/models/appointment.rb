@@ -22,7 +22,8 @@ module Polycon
                     Nombre : %s \n
                     Apellido : %s \n
                     Telefono : %s \n
-                " % [date_as_string, @professional, @name, @surname, @phone]
+                    Notas del turno : %s \n
+                " % [date_as_string, @professional, @name, @surname, @phone, @notes]
             end
 
             def to_a

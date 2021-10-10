@@ -1,7 +1,7 @@
 require 'date'
 require 'fileutils'
 module Polycon
-        module Utils #Métodos de ayuda van acá
+        module Utils
 
             def self.polycon_root_exists?
                 #Dir.home devuelve el home del usuario que ejecuta.
@@ -73,11 +73,9 @@ module Polycon
                 Dir.glob(path + "/*").select { |entry| File.directory? entry }
             end
 
+            def self.check_if_any_string_is_empty(*args)
+                #Devuelve true si algún parámetro es string vacío
+                args.any?{ |param| param.empty? }
+            end
         end
 end
-#dateObject = Polycon::Utils.format_string_to_date("2021-09-16 13:00")
-#dateObject = Polycon::Utils.format_string_to_date("2021-09-11")
-#puts Polycon::Utils.format_date_to_string(dateObject)
-#puts Polycon::Utils.convert_to_file_convention(Polycon::Utils.format_date_to_string(dateObject))
-#puts Polycon::Utils.beautify_string_date("2021-09-11")
-#puts Polycon::Utils.get_all_folders_from_path(Dir.home + "/" + ".polycon")

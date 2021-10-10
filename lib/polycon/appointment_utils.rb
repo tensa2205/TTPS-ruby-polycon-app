@@ -1,7 +1,7 @@
 module Polycon
     module AppointmentUtils
         require 'fileutils'
-        #Me quedé con el create.
+
         def self.create_appointment_file(folder, file_name, appointment_object)
             new_file = File.new(folder << "/" <<file_name << ".paf", "w")
             iterable_object = appointment_object.to_a
@@ -27,6 +27,7 @@ module Polycon
             puts temp_object
             #Imprime doble si saco el comentario de arriba
         end
+        
         def self.cancel_appointment(folder, file_name)
             path_to_file = assemble_path_file(folder, file_name)
             File.delete(path_to_file) if File.exist?(path_to_file)
@@ -35,7 +36,7 @@ module Polycon
         def self.cancel_all_appointments_from_professional_with_folder(folder)
             FileUtils.rm Dir.glob(folder << "/" <<"*.paf")
         end
-        #DEJÉ ACA
+
         def self.edit_appointment(folder, file_name, date_obj, professional_beautified_name, parameters)
             file_path = assemble_path_file(folder, file_name)
             file_content = IO.readlines(file_path) #0 -> apellido, 1 -> nombre, 2 -> Teléfono, 3 -> Notas
@@ -46,7 +47,6 @@ module Polycon
             edited_appointment = Polycon::Models::Appointment.new(date_obj, professional_beautified_name, file_content[1], file_content[0], file_content[2], file_content[3])
             cancel_appointment(folder, file_name)
             create_appointment_file(folder, file_name, edited_appointment)
-            #puts file_content
         end
 
         def self.reschedule(folder, old_filename, new_filename)

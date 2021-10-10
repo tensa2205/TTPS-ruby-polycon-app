@@ -13,14 +13,17 @@ module Polycon
 
 
         def self.professional_folder_exists?(professional_name)
-            Dir.exist?(Dir.home + "/" + ".polycon" + "/" + self.convert_professional_name_to_folder_name(professional_name))
+            pro_name = convert_professional_name_to_folder_name(professional_name)
+            return false unless !pro_name.empty?
+            Dir.exist?(Dir.home + "/" + ".polycon" + "/" + pro_name)
         end
 
 
         def self.create_professional_folder(professional_name)
             raise StandardError, "Ya existe ese profesional", caller unless !professional_folder_exists?(professional_name)
             folder_name = self.convert_professional_name_to_folder_name(professional_name)
-            Dir.mkdir(Dir.home + "/" + ".polycon" + "/" + folder_name) 
+            entire_path = Dir.home + "/" + ".polycon" + "/" + folder_name
+            Dir.mkdir(entire_path)
         end
 
 
@@ -43,8 +46,8 @@ module Polycon
 
 
         def self.fire_professional(professional_name)
-            raise StandardError, "Profesional inexistente", caller unless professional_folder_exists?(professional_name)
-            raise StandardError, "No se puede despedir un profesional con turnos pendientes", caller unless !professional_has_appointments?(professional_name)
+            abort("Profesional inexistente") unless professional_folder_exists?(professional_name)
+            abort("No se puede despedir un profesional con turnos pendientes") unless !professional_has_appointments?(professional_name)
             Polycon::Utils.delete_folder_using_path(path_professional_folder(professional_name))
         end
 
@@ -80,7 +83,9 @@ module Polycon
         end
 
         def self.list_all_professional_appointments(professional_name, filter_by_date = nil)
-            raise StandardError, "Fecha de filtro inválida", caller unless filter_by_date =~ /\d\d\d\d-\d\d-\d\d/
+            unless filter_by_date.nil?
+                raise StandardError, "Fecha de filtro inválida", caller unless filter_by_date =~ /\d\d\d\d-\d\d-\d\d/
+            end
             print_header(professional_name, filter_by_date)
             professional_folder = path_professional_folder(professional_name) + "/"
             filename_startpos = professional_folder.rindex("/") +1
@@ -96,7 +101,3 @@ module Polycon
         ################################################################## Fin listar turnos de un profesional
     end
 end
-
-#str = "Alma Estevez 1111   2222"
-#puts Polycon::ProfessionalUtils.beautify_professional_name(str)
-#puts Polycon::ProfessionalUtils.retrieve_professional_name(Polycon::ProfessionalUtils.convert_professional_name_to_folder_name(str))
