@@ -20,6 +20,40 @@ O simplemente:
 $ bin/polycon [args]
 ```
 
+Si se agrega el directorio `bin/` del proyecto a la variable de ambiente `PATH` de la shell,
+el comando puede utilizarse sin prefijar `bin/`:
+
+```bash
+# Esto debe ejecutarse estando ubicad@ en el directorio raiz del proyecto, una única vez
+# por sesión de la shell
+$ export PATH="$(pwd)/bin:$PATH"
+$ polycon [args]
+```
+
+> Notá que para la ejecución de la herramienta, es necesario tener una versión reciente de
+> Ruby (2.6 o posterior) y tener instaladas sus dependencias, las cuales se manejan con
+> Bundler.
+
+### Instalación de dependencias
+
+Este proyecto utiliza Bundler para manejar sus dependencias. Bundler se encarga de instalar las dependencias ("gemas")
+que el proyecto tenga declaradas en el archivo `Gemfile` al ejecutar el siguiente comando:
+
+```bash
+$ bundle install
+```
+
+> Nota: Bundler debería estar disponible en tu instalación de Ruby, pero si por algún
+> motivo al intentar ejecutar el comando `bundle` obtenés un error indicando que no se
+> encuentra el comando, podés instalarlo mediante el siguiente comando:
+>
+> ```bash
+> $ gem install bundler
+> ```
+
+Una vez que la instalación de las dependencias sea exitosa, podés comenzar a probar la
+herramienta.
+
 ## Listado de comandos de professionals
 Listado de cada comando junto a su propósito:
 ```
