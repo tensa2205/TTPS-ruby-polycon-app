@@ -220,6 +220,52 @@ module Polycon
           )
         end
       end
+
+      class ListByDay < Dry::CLI::Command
+        desc 'List all appointments by day using enriched text'
+
+        argument :date, required: true, desc: 'Date to search'
+        option :professional, required: false, desc: 'Full name of the professional'
+
+
+        example [
+          '"2021-09-16" #List all appointments from all professionals in a specified date.',
+          '"2021-09-16" --professional="Alma Estevez" #List all appointments from Alma Estevez in the specified date.',
+        ]
+        def call(date:, professional: nil)
+          warn("Implement all calls here")
+          #Chequear carpeta root, si no existe -> abort.
+          abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
+          if professional.nil?
+            appointments = Polycon::AppointmentUtils.get_appointments_by_date_range(Polycon::Utils.date_range_to_hash(date))
+          else
+            appointments = Polycon::AppointmentUtils.get_appointments_by_date_range_from_professional(professional, Polycon::Utils.date_range_to_hash(date))
+          end
+
+          Polycon::TableUtils.export_template_result(
+            Polycon::AppointmentUtils.create_appointments_day_array(
+              appointments
+            ),
+            Polycon::Models::TimeRange.get_time_ranges(8,20,30)
+          )
+        end
+      end
+
+      class ListByWeek < Dry::CLI::Command
+        desc 'List all appointments by a specified week using enriched text'
+
+        argument :date, required: true, desc: 'Beginning date'
+        option :professional, required: false, desc: 'Full name of the professional'
+
+
+        example [
+          '"2021-09-16" #List all appointments from all professionals in a specified week starting from the given date.',
+          '"2021-09-16" --professional="Alma Estevez" #List all appointments from Alma Estevez in the specified week starting from the given date.',
+        ]
+        def call(date:, professional: nil)
+          warn("Implement all calls here")
+        end
+      end
     end
   end
 end

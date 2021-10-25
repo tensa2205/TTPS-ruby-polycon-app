@@ -15,6 +15,10 @@ module Polycon
             def date_as_string
                 @date.strftime("%F %R")
             end
+
+            def hour
+                @date.strftime("%H:%M")
+            end
             def to_s
                 "Datos del turno:\n
                     Fecha : %s \n
@@ -26,6 +30,14 @@ module Polycon
                 " % [date_as_string, @professional, @name, @surname, @phone, @notes]
             end
 
+            def to_table
+                "   Profesional : %s ----
+                    Nombre del paciente: %s ----
+                    Apellido del paciente: %s ----
+                    Telefono del paciente: %s ----
+                    Notas del turno : %s
+                " % [@professional, @name, @surname, @phone, @notes]
+            end
             def to_a
                 [@surname , @name, @phone, @notes]
             end

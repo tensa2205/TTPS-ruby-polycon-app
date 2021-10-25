@@ -1,7 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    cgi (0.3.0)
     dry-cli (0.7.0)
+    erb (2.2.3)
+      cgi
 
 PLATFORMS
   x64-mingw32
@@ -9,6 +12,7 @@ PLATFORMS
 
 DEPENDENCIES
   dry-cli (~> 0.7)
+  erb (~> 2.2.3)
 
 RUBY VERSION
    ruby 2.7.4p191

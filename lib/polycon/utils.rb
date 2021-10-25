@@ -76,5 +76,24 @@ module Polycon
                 #Devuelve true si algún parámetro es string vacío
                 args.any?{ |param| param.empty? }
             end
+
+            ############################Entrega 2
+            def self.string_to_date(stringDate)
+                #Date solo, no datetime
+                begin
+                    Date.parse(stringDate)
+                rescue ArgumentError
+                    STDERR.puts "La fecha recibida tiene un formato invalido"
+                    exit
+                end
+            end
+
+            def self.date_range_to_hash(date, week = false)
+                #Genera los dias necesarios -> puede ser 1 día o 7 días, esto depende del parámetro week.
+                date = string_to_date(date)
+                range = week ? (date..date+6) : (date..date)
+                hash = Hash[ range.map{|date| date.to_s}.collect { |date_converted| [date_converted, [] ] } ]
+                hash
+            end
         end
 end
