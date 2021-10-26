@@ -233,15 +233,19 @@ module Polycon
           '"2021-09-16" --professional="Alma Estevez" #List all appointments from Alma Estevez in the specified date.',
         ]
         def call(date:, professional: nil)
-          warn("Implement all calls here")
           #Chequear carpeta root, si no existe -> abort.
           abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
+          #Chequea que la carpeta de reportes exista, si no existe se crea.
+          Polycon::Utils.create_reports_folder unless Polycon::Utils.reports_folder_exist?
+          #Toma en cuenta si hay profesional especificado o no.
           if professional.nil?
             appointments = Polycon::AppointmentUtils.get_appointments_by_date_range(Polycon::Utils.date_range_to_hash(date))
           else
             appointments = Polycon::AppointmentUtils.get_appointments_by_date_range_from_professional(professional, Polycon::Utils.date_range_to_hash(date))
           end
 
+          #Creación del HTML.
+          #Generado en .polycon/reports/YYYY-MM-DD_HH:M.html
           Polycon::TableUtils.export_template_result(
             Polycon::AppointmentUtils.create_appointments_day_array(
               appointments
@@ -263,7 +267,25 @@ module Polycon
           '"2021-09-16" --professional="Alma Estevez" #List all appointments from Alma Estevez in the specified week starting from the given date.',
         ]
         def call(date:, professional: nil)
-          warn("Implement all calls here")
+          #Chequear carpeta root, si no existe -> abort.
+          abort("Ha ocurrido un error, estalló todo ya que no existe nuestra base de datos") unless Polycon::Utils.polycon_root_exists?
+          #Chequea que la carpeta de reportes exista, si no existe se crea.
+          Polycon::Utils.create_reports_folder unless Polycon::Utils.reports_folder_exist?
+          #Toma en cuenta si hay profesional especificado o no.
+          if professional.nil?
+            appointments = Polycon::AppointmentUtils.get_appointments_by_date_range(Polycon::Utils.date_range_to_hash(date, true))
+          else
+            appointments = Polycon::AppointmentUtils.get_appointments_by_date_range_from_professional(professional, Polycon::Utils.date_range_to_hash(date, true))
+          end
+
+          #Creación del HTML.
+          #Generado en .polycon/reports/YYYY-MM-DD_HH:M.html
+          Polycon::TableUtils.export_template_result(
+            Polycon::AppointmentUtils.create_appointments_day_array(
+              appointments
+            ),
+            Polycon::Models::TimeRange.get_time_ranges(8,20,30)
+          )
         end
       end
     end

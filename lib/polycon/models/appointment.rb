@@ -31,10 +31,10 @@ module Polycon
             end
 
             def to_table
-                "   Profesional : %s ----
-                    Nombre del paciente: %s ----
-                    Apellido del paciente: %s ----
-                    Telefono del paciente: %s ----
+                "   Profesional : %s  <br>
+                    Nombre del paciente: %s  <br>
+                    Apellido del paciente: %s  <br>
+                    Telefono del paciente: %s  <br>
                     Notas del turno : %s
                 " % [@professional, @name, @surname, @phone, @notes]
             end

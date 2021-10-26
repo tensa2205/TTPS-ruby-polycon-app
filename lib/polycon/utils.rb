@@ -13,6 +13,14 @@ module Polycon
                 Dir.mkdir(Dir.home << "/" << ".polycon") 
             end
 
+            def self.reports_folder_exist?
+                Dir.exist?(Dir.home << "/" << ".polycon" << "/" << "reports")
+            end
+
+            def self.create_reports_folder
+                Dir.mkdir(Dir.home << "/" << ".polycon" << "/" << "reports")
+            end
+
             #Quizás sea obsoleto a futuro.
             def self.format_date_to_string(date)
                 date.strftime("%F %R")
@@ -33,7 +41,7 @@ module Polycon
 
             def self.convert_to_file_convention_from_date(date)
                 #AAAA-MM-DD_HH-II
-                aux_str = self.format_date_to_string(aux_date)
+                aux_str = self.format_date_to_string(date)
                 self.convert_to_file_convention(aux_str)
             end
 

@@ -9,7 +9,8 @@ module Polycon
 
             def appointment_in_hour?(time_range)
                 app = @appointments.select { |appointment| time_range.include?(appointment.hour)}.first()
-                app.to_table unless app.nil?
+                return app.to_table unless app.nil?
+                return "---"
             end
         end
     end

@@ -22,28 +22,44 @@ module Polycon
                 <style>
                     table, th, td {
                         border:1px solid black;
+                        table-layout: auto;
+                        width: 500px;
+                        text-align: center;
+                        padding: 10px;
+                    }
+                    h2{
+                        text-align: center;
                     }
                     th {
-                        height: 70px;
+                        height: 60px;
+                        background-color: orange ;
+                        font-size: 22px;
                     }
                     td {
-                        height: 40px;
+                        height: 60px;
+                        width: 200px;
+
+                    }
+                    .hours{
+                        background-color: #FFC971 ;
+                        font-size: 22px;
+                        font-weight: bold;
                     }
                 </style>
                 <body>
                 
-                <h2>LISTADO DE TURNOS</h2>
+                <h2> << LISTADO DE TURNOS >> </h2>
                 
                 <table style="width:100%">
                     <tr>
-                        <th>Hora</th>
+                        <th class="title__hour">Hora</th>
                         <% @appointments_days.each do |day| %>
                             <th><%= day.date %></th>
                         <% end %>
                     </tr>
                 <% @hours.each do |hour| %>
                     <tr>
-                        <td> <%=hour.start %> </td>
+                        <td class="hours"> <%=hour.start %> </td>
                         <% @appointments_days.each do |day| %>
                             <td> <%=day.appointment_in_hour?(hour) %> </th>
                         <% end %>
@@ -64,22 +80,11 @@ module Polycon
         end
         def self.export_template_result(appointments, hours)
             template_res = produce_template_result(appointments, hours)
-            file_name = Polycon::Utils.format_date_to_string(DateTime.now())
-            puts file_name.class
-            File.open("test.html" ,'w') do |f|
+            file_name = Polycon::Utils.convert_to_file_convention_from_date(DateTime.now()) + ".html"
+            path = Dir.home + "/" + ".polycon" + "/" + "reports" + "/" + file_name 
+            File.open(path ,'w') do |f|
                 f.write(template_res)
             end
         end
     end
 end
-=begin 
-rhtml = ERB.new(template)
-table = Table.new()
-# Produce result.
-#rhtml.run()
-res = rhtml.result(table.get_binding)
-
-File.open('test.html', 'w') do |f|
-    f.write(res)
-end
-=end
