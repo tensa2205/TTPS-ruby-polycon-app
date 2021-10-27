@@ -61,7 +61,7 @@ module Polycon
                     <tr>
                         <td class="hours"> <%=hour.start %> </td>
                         <% @appointments_days.each do |day| %>
-                            <td> <%=day.appointment_in_hour?(hour) %> </th>
+                            <td> <%=day.get_appointments_in_hour(hour) %> </th>
                         <% end %>
                     </tr>
                 <% end %>

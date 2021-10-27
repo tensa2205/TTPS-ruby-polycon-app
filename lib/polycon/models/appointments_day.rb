@@ -7,9 +7,15 @@ module Polycon
                 @appointments = appointment_list #Objetos appointment
             end
 
-            def appointment_in_hour?(time_range)
-                app = @appointments.select { |appointment| time_range.include?(appointment.hour)}.first()
-                return app.to_table unless app.nil?
+            def appointments_in_hour?(time_range)
+                @appointments.select { |appointment| time_range.include?(appointment.hour)}
+            end
+
+            def get_appointments_in_hour(time_range)
+                appointments = appointments_in_hour?(time_range)
+                string_res = ""
+                appointments.each { |appointment| string_res << appointment.to_table }
+                return string_res unless string_res.empty?
                 return "---"
             end
         end

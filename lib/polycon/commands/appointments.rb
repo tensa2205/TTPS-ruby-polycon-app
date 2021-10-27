@@ -241,6 +241,7 @@ module Polycon
           if professional.nil?
             appointments = Polycon::AppointmentUtils.get_appointments_by_date_range(Polycon::Utils.date_range_to_hash(date))
           else
+            abort("El profesional ingresado no existe en nuestro sistema, quizás lo escribiste mal") unless Polycon::ProfessionalUtils.professional_folder_exists?(professional)
             appointments = Polycon::AppointmentUtils.get_appointments_by_date_range_from_professional(professional, Polycon::Utils.date_range_to_hash(date))
           end
 
@@ -275,6 +276,7 @@ module Polycon
           if professional.nil?
             appointments = Polycon::AppointmentUtils.get_appointments_by_date_range(Polycon::Utils.date_range_to_hash(date, true))
           else
+            abort("El profesional ingresado no existe en nuestro sistema, quizás lo escribiste mal") unless Polycon::ProfessionalUtils.professional_folder_exists?(professional)
             appointments = Polycon::AppointmentUtils.get_appointments_by_date_range_from_professional(professional, Polycon::Utils.date_range_to_hash(date, true))
           end
 

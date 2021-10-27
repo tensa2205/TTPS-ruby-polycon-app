@@ -35,7 +35,8 @@ module Polycon
                     Nombre del paciente: %s  <br>
                     Apellido del paciente: %s  <br>
                     Telefono del paciente: %s  <br>
-                    Notas del turno : %s
+                    Notas del turno : %s <br>
+                    ------------------------- <br>
                 " % [@professional, @name, @surname, @phone, @notes]
             end
             def to_a
