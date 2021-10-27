@@ -81,7 +81,7 @@ module Polycon
         def self.export_template_result(appointments, hours)
             template_res = produce_template_result(appointments, hours)
             file_name = Polycon::Utils.convert_to_file_convention_from_date(DateTime.now()) + ".html"
-            path = Dir.home + "/" + ".polycon" + "/" + "reports" + "/" + file_name 
+            path = Dir.home + "/" + ".polycon-reports" + "/" + file_name 
             File.open(path ,'w') do |f|
                 f.write(template_res)
             end

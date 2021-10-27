@@ -14,11 +14,11 @@ module Polycon
             end
 
             def self.reports_folder_exist?
-                Dir.exist?(Dir.home << "/" << ".polycon" << "/" << "reports")
+                Dir.exist?(Dir.home << "/" << ".polycon-reports")
             end
 
             def self.create_reports_folder
-                Dir.mkdir(Dir.home << "/" << ".polycon" << "/" << "reports")
+                Dir.mkdir(Dir.home << "/" << ".polycon-reports")
             end
 
             #Quizás sea obsoleto a futuro.
