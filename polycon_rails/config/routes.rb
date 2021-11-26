@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :professionals
   resources :appointments
   root to: 'welcome#index'
 
