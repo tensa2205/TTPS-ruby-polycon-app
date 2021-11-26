@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :appointments
   root to: 'welcome#index'
 
   resources :users
