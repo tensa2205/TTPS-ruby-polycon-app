@@ -1,11 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Professionals</h1>
+<h1>Profesionales</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Full name</th>
+      <th>Nombre completo</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,10 +14,10 @@
     <% @professionals.each do |professional| %>
       <tr>
         <td><%= professional.full_name %></td>
-        <td><%= link_to 'Appointments', professional_appointments_path(professional) %></td>
-        <td><%= link_to 'Show', professional %></td>
-        <td><%= link_to 'Edit', edit_professional_path(professional) %></td>
-        <td><%= link_to 'Destroy', professional, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Turnos', professional_appointments_path(professional) %></td>
+        <td><%= link_to 'Detalle', professional %></td>
+        <td><%= link_to 'Editar', edit_professional_path(professional) %></td>
+        <td><%= link_to 'Borrar', professional, method: :delete, data: { confirm: 'Estás seguro de despedir al profesional?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -25,5 +25,5 @@
 
 <br>
 
-<%= link_to 'New Professional', new_professional_path %>
-<%= link_to 'Back', root_path %>
+<%= link_to 'Contratar profesional', new_professional_path %>
+<%= link_to 'Volver', root_path %>

@@ -22,8 +22,7 @@
   </div>
 
   <div class="field">
-    <%= form.label :role_id %>
-    <%= form.text_field :role_id %>
+    <%= form.select :role_id, Role.all.map{ |r| [r.name, r.id, {:name => r.name.downcase}] } %>
   </div>
 
   <div class="actions">
