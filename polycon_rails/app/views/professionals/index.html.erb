@@ -14,6 +14,7 @@
     <% @professionals.each do |professional| %>
       <tr>
         <td><%= professional.full_name %></td>
+        <td><%= link_to 'Appointments', professional_appointments_path(professional) %></td>
         <td><%= link_to 'Show', professional %></td>
         <td><%= link_to 'Edit', edit_professional_path(professional) %></td>
         <td><%= link_to 'Destroy', professional, method: :delete, data: { confirm: 'Are you sure?' } %></td>
