@@ -1,34 +1,66 @@
+<%= render "layouts/navbar.html.erb"%>
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>First name:</strong>
-  <%= @appointment.first_name %>
-</p>
+<div class="mb-3" style="margin-left: 6%; margin-top: 3%;">
+  <h2 class="modification-title" style="color: #115571;">Mostrando turno </h2>
+</div>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @appointment.last_name %>
-</p>
+<div>
+  <div class="mb-3 row" style="margin-left: 6%;">
+      <div class="col-3">
+          <strong >Nombre del paciente: </strong>
+      </div>
+      <div class="col-5">
+          <%= @appointment.first_name %>
+      </div>
+  </div>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @appointment.phone %>
-</p>
+  <div class="mb-3 row" style="margin-left: 6%;">
+      <div class="col-3">
+          <strong >Apellido del paciente: </strong>
+      </div>
+      <div class="col-5">
+          <%= @appointment.last_name %>
+      </div>
+  </div>
 
-<p>
-  <strong>Note:</strong>
-  <%= @appointment.note %>
-</p>
+  <div class="mb-3 row" style="margin-left: 6%;">
+      <div class="col-3">
+          <strong >Teléfono del paciente: </strong>
+      </div>
+      <div class="col-5">
+          <%= @appointment.phone %>
+      </div>
+  </div>
 
-<p>
-  <strong>Date:</strong>
-  <%= @appointment.date %>
-</p>
+  <div class="mb-3 row" style="margin-left: 6%;">
+      <div class="col-3">
+          <strong >Notas adicionales sobre el turno: </strong>
+      </div>
+      <div class="col-5">
+          <%= @appointment.note %>
+      </div>
+  </div>
 
-<p>
-  <strong>Professional:</strong>
-  <%= @appointment.professional_id %>
-</p>
+  <div class="mb-3 row" style="margin-left: 6%;">
+      <div class="col-3">
+          <strong >Fecha y hora del turno: </strong>
+      </div>
+      <div class="col-5">
+          <%= @appointment.date %>
+      </div>
+  </div>
 
-<%= link_to 'Edit', edit_professional_appointment_path(@professional, @appointment) %> |
-<%= link_to 'Back', professional_appointments_path(@professional) %>
+  <div class="mb-3 row" style="margin-left: 6%;">
+      <div class="col-3">
+          <strong >Profesional que lo atiende: </strong>
+      </div>
+      <div class="col-5">
+          <%= @appointment.professional.full_name %>
+      </div>
+  </div>
+</div>
+<div style="margin-left: 6%">
+  <%= link_to 'Editar', edit_professional_appointment_path(@professional, @appointment), class: "btn btn", style: "background-color: #6d04d6; color: white; margin-right: 15px"  %>
+  <%= link_to 'Volver', professional_appointments_path(@professional),  class: "btn btn-secondary my-2"   %>
+</div>

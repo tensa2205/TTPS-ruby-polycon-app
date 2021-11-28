@@ -1,5 +1,7 @@
+<%= render "layouts/navbar.html.erb"%>
+
 <h1>Contratando profesional</h1>
 
 <%= render 'form', professional: @professional %>
 
-<%= link_to 'Back', professionals_path %>
+<%= link_to 'Volver', professionals_path, class: "btn btn-secondary", style: "margin-left: 25px; margin-top:10px" %>

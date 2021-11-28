@@ -1,19 +1,28 @@
+<%= render "layouts/navbar.html.erb"%>
 <p id="notice"><%= notice %></p>
+<div class="mb-3" style="margin-left: 6%; margin-top: 3%;">
+  <h2 class="modification-title" style="color: #115571;">Mostrando usuario </h2>
+</div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
-<p>
-  <strong>Role:</strong>
-  <%= @user.role_id %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<div>
+  <div class="mb-3 row" style="margin-left: 6%;">
+      <div class="col-3">
+          <strong >Nombre de usuario: </strong>
+      </div>
+      <div class="col-5">
+          <%= @user.name %>
+      </div>
+  </div>
+  <div class="mb-3 row" style="margin-left: 6%;">
+      <div class="col-3">
+          <strong >Rol: </strong>
+      </div>
+      <div class="col-5">
+          <%= @user.role.name %>
+      </div>
+  </div>
+<div>
+<div style="margin-left: 6%">
+  <%= link_to 'Editar', edit_user_path(@user), class: "btn btn", style: "background-color: #6d04d6; color: white; margin-right: 15px"  %>
+  <%= link_to 'Volver', users_path,  class: "btn btn-secondary my-2"   %>
+</div>

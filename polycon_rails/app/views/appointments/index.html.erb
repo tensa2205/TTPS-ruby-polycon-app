@@ -1,15 +1,19 @@
+<%= render "layouts/navbar.html.erb"%>
 <p id="notice"><%= notice %></p>
-
 <h1>Turnos de <%= @professional.full_name %></h1>
-
-<table>
-  <thead>
+<p> 
+  <%= link_to 'Pedir turno', new_professional_appointment_path(@professional), class: "btn btn-primary my-2 margin-button" %>
+  <%= link_to 'Volver', professionals_path,  class: "btn btn-secondary my-2" %>
+</p>
+<table class="table">
+  <thead class="thead-dark">
     <tr>
-      <th>Nombre del paciente</th>
-      <th>Apellido del paciente</th>
-      <th>Teléfono</th>
-      <th>Notas adicionales</th>
-      <th>Fecha y hora de turno</th>
+      <th scope="col">Nombre del paciente</th>
+      <th scope="col">Apellido del paciente</th>
+      <th scope="col">Teléfono</th>
+      <th scope="col">Notas adicionales</th>
+      <th scope="col">Fecha y hora de turno</th>
+      <th scope="col">Acciones</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -22,15 +26,14 @@
         <td><%= appointment.phone %></td>
         <td><%= appointment.note %></td>
         <td><%= appointment.date %></td>
-        <td><%= link_to 'Detalle', [@professional, appointment] %></td>
-        <td><%= link_to 'Editar', edit_professional_appointment_path(@professional, appointment) %></td>
-        <td><%= link_to 'Cancelar turno', [@professional, appointment], method: :delete, data: { confirm: 'Estás seguro de querer cancelar el turno?' } %></td>
+        <td>
+          <%= link_to 'Detalle', [@professional, appointment], class: "btn btn-info btn-sm" %>
+          <%= link_to 'Editar', edit_professional_appointment_path(@professional, appointment), class: "btn btn btn-sm", style: "background-color: #6d04d6; color: white" %>
+          <%= link_to 'Cancelar turno', [@professional, appointment], method: :delete, data: { confirm: 'Estás seguro de querer cancelar el turno?' }, class: "btn btn-danger btn-sm"  %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'Pedir turno', new_professional_appointment_path(@professional) %>
-<%= link_to 'Volver', professionals_path %>

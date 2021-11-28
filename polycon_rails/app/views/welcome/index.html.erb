@@ -1,16 +1,4 @@
-<div class="collapse" id="navbarToggleExternalContent">
-  <div class="bg-dark p-4">
-    <h5 class="text-white h4">Collapsed content</h5>
-    <span class="text-muted">Toggleable via the navbar brand.</span>
-  </div>
-</div>
-<nav class="navbar navbar-dark bg-dark">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  </div>
-</nav>
+<%= render "layouts/navbar.html.erb"%>
 
 <main>
     <section class="py-5 text-center container">
@@ -20,7 +8,7 @@
             <p class="lead text-muted">Hola! Bienvenidos a Polycon, una aplicación para gestionar los profesionales y los turnos de nuestra policlínica</p>
             <p>
                 <%= link_to 'Usuarios', users_path, class: "btn btn-primary my-2" %>
-                <%= link_to 'Profesionales y turnos', professionals_path, class: "btn btn-secondary my-2" %>
+                <%= link_to 'Profesionales y turnos', professionals_path, class: "btn btn-info my-2" %>
 
             </p>
         </div>

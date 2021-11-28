@@ -11,21 +11,22 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
+  <div class="field mb-3">
+    <%= form.label :name, class: "form-label col-1", style: "margin-left: 25px"  %>
     <%= form.text_field :name %>
   </div>
 
-  <div class="field">
-    <%= form.label :password %>
+  <div class="field mb-3">
+    <%= form.label :password, class: "form-label col-1", style: "margin-left: 25px"  %>
     <%= form.text_field :password %>
   </div>
 
-  <div class="field">
+  <div class="field mb-3">
+    <%= form.label "Rol", class: "form-label col-1", style: "margin-left: 25px" %>
     <%= form.select :role_id, Role.all.map{ |r| [r.name, r.id, {:name => r.name.downcase}] } %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Guardar", class:'btn btn-primary', style: "margin-left: 25px"  %>
   </div>
 <% end %>

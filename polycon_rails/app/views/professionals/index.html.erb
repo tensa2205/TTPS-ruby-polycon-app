@@ -1,23 +1,13 @@
-<p id="notice"><%= notice %></p>
-<div class="collapse" id="navbarToggleExternalContent">
-  <div class="bg-dark p-4">
-    <h5 class="text-white h4">Collapsed content</h5>
-    <span class="text-muted">Toggleable via the navbar brand.</span>
-  </div>
-</div>
-<nav class="navbar navbar-dark bg-dark">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  </div>
-</nav>
+<%= render "layouts/navbar.html.erb"%>
 
 <h1>Profesionales</h1>
 <p> 
   <%= link_to 'Contratar profesional', new_professional_path, class: "btn btn-primary my-2 margin-button"%>
   <%= link_to 'Volver', root_path,  class: "btn btn-secondary my-2" %>
 </p>
+<div class="alert alert-info" role="alert">
+  No se puede despedir a profesionales que tengan turnos pendientes
+</div>
 
 <table class="table">
   <thead class="thead-dark">
@@ -36,7 +26,9 @@
           <%= link_to 'Turnos', professional_appointments_path(professional), class: "btn btn-primary btn-sm" %>
           <%= link_to 'Detalle', professional, class: "btn btn-info btn-sm"%>
           <%= link_to 'Editar', edit_professional_path(professional), class: "btn btn btn-sm", style: "background-color: #6d04d6; color: white" %>
-          <%= link_to 'Borrar', professional, method: :delete, data: { confirm: 'Estás seguro de despedir al profesional?' }, class: "btn btn-danger btn-sm" %>
+          <% if check_deletion(professional) %>
+            <%= link_to 'Borrar', professional, method: :delete, data: { confirm: 'Estás seguro de despedir al profesional?' }, class: "btn btn-danger btn-sm" %>
+          <% end %>
         </td>
       </tr>
     <% end %>

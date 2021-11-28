@@ -11,32 +11,32 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name %>
+  <div class="field mb-3">
+    <%= form.label :first_name, class: "form-label col-1", style: "margin-left: 25px" %>
+    <%= form.text_field :first_name, class: "col-3" %>
   </div>
 
-  <div class="field">
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name %>
+  <div class="field mb-3">
+    <%= form.label :last_name, class: "form-label col-1", style: "margin-left: 25px" %>
+    <%= form.text_field :last_name, class: "col-3" %>
   </div>
 
-  <div class="field">
-    <%= form.label :phone %>
-    <%= form.text_field :phone %>
+  <div class="field mb-3">
+    <%= form.label :phone, class: "form-label col-1", style: "margin-left: 25px" %>
+    <%= form.text_field :phone, class: "col-3" %>
   </div>
 
-  <div class="field">
-    <%= form.label :note %>
-    <%= form.text_field :note %>
+  <div class="field mb-3">
+    <%= form.label :note, class: "form-label col-1", style: "margin-left: 25px" %>
+    <%= form.text_field :note, class: "col-3" %>
   </div>
 
-  <div class="field">
-    <%= form.label :date %>
-    <%= form.datetime_select :date %>
+  <div class="field mb-3">
+    <%= form.label :date, class: "form-label col-1", style: "margin-left: 25px" %>
+    <%= form.datetime_select :date, class: "col-3" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Guardar", class:'btn btn-primary', style: "margin-left: 25px"  %>
   </div>
 <% end %>

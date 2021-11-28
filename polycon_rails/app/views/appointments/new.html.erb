@@ -1,5 +1,7 @@
-<h1>New Appointment</h1>
+<%= render "layouts/navbar.html.erb"%>
+
+<h1>Pidiendo turno</h1>
 
 <%= render 'form', appointment: @appointment, professional: @professional %>
 
-<%= link_to 'Back', professional_appointments_path(@professional) %>
+<%= link_to 'Volver', professional_appointments_path(@professional), class: "btn btn-secondary", style: "margin-left: 25px; margin-top:10px"   %>

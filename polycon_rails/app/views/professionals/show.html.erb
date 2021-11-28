@@ -1,9 +1,18 @@
+<%= render "layouts/navbar.html.erb"%>
 <p id="notice"><%= notice %></p>
+<div class="mb-3" style="margin-left: 6%; margin-top: 3%;">
+  <h2 class="modification-title" style="color: #115571;">Mostrando profesional </h2>
+</div>
+<div class="mb-3 row" style="margin-left: 6%;">
+    <div class="col-3">
+        <strong >Nombre completo del profesional: </strong>
+    </div>
+    <div class="col-5">
+        <%= @professional.full_name %>
+    </div>
+</div>
 
-<p>
-  <strong>Full name:</strong>
-  <%= @professional.full_name %>
-</p>
-
-<%= link_to 'Edit', edit_professional_path(@professional) %> |
-<%= link_to 'Back', professionals_path %>
+<div style="margin-left: 6%">
+    <%= link_to 'Editar', edit_professional_path(@professional), class: "btn btn", style: "background-color: #6d04d6; color: white; margin-right: 15px" %>
+    <%= link_to 'Volver', professionals_path,  class: "btn btn-secondary my-2"  %>
+</div>

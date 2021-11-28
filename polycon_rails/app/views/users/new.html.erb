@@ -1,5 +1,7 @@
-<h1>New User</h1>
+<%= render "layouts/navbar.html.erb"%>
+
+<h1>Creando usuario</h1>
 
 <%= render 'form', user: @user %>
 
-<%= link_to 'Back', users_path %>
+<%= link_to 'Volver', users_path, class: "btn btn-secondary", style: "margin-left: 25px; margin-top:10px"    %>

@@ -11,12 +11,12 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :full_name %>
-    <%= form.text_field :full_name %>
+  <div class="field mb-3">
+    <%= form.label :full_name, class: "form-label", style: "margin-left: 25px"%>
+    <%= form.text_field :full_name, class: "form-control" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Guardar", class:'btn btn-primary', style: "margin-left: 25px" %>
   </div>
 <% end %>
