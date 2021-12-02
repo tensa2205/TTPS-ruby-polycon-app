@@ -61,6 +61,8 @@
   </div>
 </div>
 <div style="margin-left: 6%">
-  <%= link_to 'Editar', edit_professional_appointment_path(@professional, @appointment), class: "btn btn", style: "background-color: #6d04d6; color: white; margin-right: 15px"  %>
-  <%= link_to 'Volver', professional_appointments_path(@professional),  class: "btn btn-secondary my-2"   %>
+    <% if isNotConsultaUser? %>
+        <%= link_to 'Editar', edit_professional_appointment_path(@professional, @appointment), class: "btn btn", style: "background-color: #6d04d6; color: white; margin-right: 15px"  %>
+    <% end %>
+    <%= link_to 'Volver', professional_appointments_path(@professional),  class: "btn btn-secondary my-2"   %>
 </div>

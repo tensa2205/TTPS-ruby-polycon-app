@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_25_224427) do
+ActiveRecord::Schema.define(version: 2021_12_02_221100) do
 
   create_table "appointments", force: :cascade do |t|
     t.string "first_name", null: false
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2021_11_25_224427) do
     t.integer "role_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "password", null: false
+    t.string "password_digest", null: false
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["role_id"], name: "index_users_on_role_id"
   end

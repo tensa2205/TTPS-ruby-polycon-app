@@ -28,8 +28,11 @@
         <td><%= appointment.date %></td>
         <td>
           <%= link_to 'Detalle', [@professional, appointment], class: "btn btn-info btn-sm" %>
-          <%= link_to 'Editar', edit_professional_appointment_path(@professional, appointment), class: "btn btn btn-sm", style: "background-color: #6d04d6; color: white" %>
-          <%= link_to 'Cancelar turno', [@professional, appointment], method: :delete, data: { confirm: 'Estás seguro de querer cancelar el turno?' }, class: "btn btn-danger btn-sm"  %>
+          <% if isNotConsultaUser? %>
+            <%= link_to 'Editar', edit_professional_appointment_path(@professional, appointment), class: "btn btn btn-sm", style: "background-color: #6d04d6; color: white" %>
+            <%= link_to 'Cancelar turno', [@professional, appointment], method: :delete, data: { confirm: 'Estás seguro de querer cancelar el turno?' }, class: "btn btn-danger btn-sm"  %>
+          <% end %>
+          
         </td>
       </tr>
     <% end %>

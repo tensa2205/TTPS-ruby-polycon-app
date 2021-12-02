@@ -4,24 +4,43 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments or /appointments.json
   def index
-    @appointments = @professional.appointments.order('date DESC')
+    if session[:user_id] #means the user is logged in
+      @appointments = @professional.appointments.order('date DESC')
+    else
+      redirect_to login_path
+    end
   end
 
   # GET /appointments/1 or /appointments/1.json
   def show
+    if session[:user_id].nil?
+      redirect_to login_path
+    end
   end
 
   # GET /appointments/new
   def new
+    if session[:user_id].nil?
+      redirect_to login_path
+    end
     @appointment = @professional.appointments.new
   end
 
   # GET /appointments/1/edit
   def edit
+    if session[:user_id].nil?
+      redirect_to login_path
+    end
+    if current_user.role.name == "Consulta"
+      redirect_to root_path
+    end
   end
 
   # POST /appointments or /appointments.json
   def create
+    if session[:user_id].nil?
+      redirect_to login_path
+    end
     @appointment = @professional.appointments.new(appointment_params)
 
     respond_to do |format|
@@ -37,7 +56,13 @@ class AppointmentsController < ApplicationController
 
   # PATCH/PUT /appointments/1 or /appointments/1.json
   def update
-    respond_to do |format|
+    if session[:user_id].nil?
+      redirect_to login_path
+    end
+    if current_user.role.name == "Consulta"
+      redirect_to root_path
+    end
+      respond_to do |format|
       if @appointment.update(appointment_params)
         format.html { redirect_to [@professional, @appointment], notice: "Appointment was successfully updated." }
         format.json { render :show, status: :ok, location: [@professional, @appointment] }
@@ -50,6 +75,12 @@ class AppointmentsController < ApplicationController
 
   # DELETE /appointments/1 or /appointments/1.json
   def destroy
+    if session[:user_id].nil?
+      redirect_to login_path
+    end
+    if current_user.role.name == "Consulta"
+      redirect_to root_path
+    end
     @appointment.destroy
     respond_to do |format|
       format.html { redirect_to professional_appointments_url, notice: "Se ha cancelado el turno." }

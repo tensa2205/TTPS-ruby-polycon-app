@@ -10,8 +10,6 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <%= link_to 'Pagina principal', root_path,  class: "btn btn-light justify-content-center" %>
-    <button class="btn btn-secondary float-end">
-      Sign out
-    </button>
+    <%= link_to 'Sign out', logout_path, method: "delete" , class: "btn btn-secondary float-end" %>
   </div>
 </nav>
