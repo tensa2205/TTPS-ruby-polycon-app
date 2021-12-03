@@ -3,24 +3,29 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
+    redirect_if_not_logged_or_not_admin
     @users = User.all
   end
 
   # GET /users/1 or /users/1.json
   def show
+    redirect_if_not_logged_or_not_admin
   end
 
   # GET /users/new
   def new
+    redirect_if_not_logged_or_not_admin
     @user = User.new
   end
 
   # GET /users/1/edit
   def edit
+    redirect_if_not_logged_or_not_admin
   end
 
   # POST /users or /users.json
   def create
+    redirect_if_not_logged_or_not_admin
     @user = User.new(user_params)
 
     respond_to do |format|
@@ -36,6 +41,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
+    redirect_if_not_logged_or_not_admin
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: "User was successfully updated." }
@@ -49,6 +55,7 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
+    redirect_if_not_logged_or_not_admin
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: "User was successfully destroyed." }
@@ -65,5 +72,13 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:name, :password, :role_id)
+    end
+
+    def redirect_if_not_logged_or_not_admin
+      if session[:user_id].nil?
+        redirect_to login_path
+      else current_user.role.name != "Administracion"
+        redirect_to_root_path
+      end
     end
 end

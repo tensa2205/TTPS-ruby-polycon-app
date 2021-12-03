@@ -13,6 +13,8 @@
 </div>
 
 <div style="margin-left: 6%">
-    <%= link_to 'Editar', edit_professional_path(@professional), class: "btn btn", style: "background-color: #6d04d6; color: white; margin-right: 15px" %>
+    <% if isAdminUser? %>
+        <%= link_to 'Editar', edit_professional_path(@professional), class: "btn btn", style: "background-color: #6d04d6; color: white; margin-right: 15px" %>
+    <% end %>
     <%= link_to 'Volver', professionals_path,  class: "btn btn-secondary my-2"  %>
 </div>

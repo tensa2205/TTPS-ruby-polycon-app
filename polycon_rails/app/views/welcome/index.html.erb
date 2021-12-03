@@ -7,7 +7,9 @@
             <h1 class="fw-light">POLYCON</h1>
             <p class="lead text-muted">¡Hola! <%=current_user.name %>, Bienvenido a Polycon, una aplicación para gestionar los profesionales y los turnos de nuestra policlínica</p>
             <p>
-                <%= link_to 'Usuarios', users_path, class: "btn btn-primary my-2" %>
+                <% if isAdminUser? %>
+                    <%= link_to 'Usuarios', users_path, class: "btn btn-primary my-2" %>
+                <% end%>
                 <%= link_to 'Profesionales y turnos', professionals_path, class: "btn btn-info my-2" %>
 
             </p>

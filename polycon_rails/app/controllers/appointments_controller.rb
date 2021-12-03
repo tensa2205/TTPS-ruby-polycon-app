@@ -4,43 +4,30 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments or /appointments.json
   def index
-    if session[:user_id] #means the user is logged in
-      @appointments = @professional.appointments.order('date DESC')
-    else
-      redirect_to login_path
+    redirect_if_not_logged
+    @appointments = @professional.appointments.order('date DESC')
     end
   end
 
   # GET /appointments/1 or /appointments/1.json
   def show
-    if session[:user_id].nil?
-      redirect_to login_path
-    end
+    redirect_if_not_logged
   end
 
   # GET /appointments/new
   def new
-    if session[:user_id].nil?
-      redirect_to login_path
-    end
+    redirect_if_not_logged
     @appointment = @professional.appointments.new
   end
 
   # GET /appointments/1/edit
   def edit
-    if session[:user_id].nil?
-      redirect_to login_path
-    end
-    if current_user.role.name == "Consulta"
-      redirect_to root_path
-    end
+    redirect_if_not_logged_or_has_consulta_role
   end
 
   # POST /appointments or /appointments.json
   def create
-    if session[:user_id].nil?
-      redirect_to login_path
-    end
+    redirect_if_not_logged
     @appointment = @professional.appointments.new(appointment_params)
 
     respond_to do |format|
@@ -56,12 +43,7 @@ class AppointmentsController < ApplicationController
 
   # PATCH/PUT /appointments/1 or /appointments/1.json
   def update
-    if session[:user_id].nil?
-      redirect_to login_path
-    end
-    if current_user.role.name == "Consulta"
-      redirect_to root_path
-    end
+    redirect_if_not_logged_or_has_consulta_role
       respond_to do |format|
       if @appointment.update(appointment_params)
         format.html { redirect_to [@professional, @appointment], notice: "Appointment was successfully updated." }
@@ -75,12 +57,7 @@ class AppointmentsController < ApplicationController
 
   # DELETE /appointments/1 or /appointments/1.json
   def destroy
-    if session[:user_id].nil?
-      redirect_to login_path
-    end
-    if current_user.role.name == "Consulta"
-      redirect_to root_path
-    end
+    redirect_if_not_logged_or_has_consulta_role
     @appointment.destroy
     respond_to do |format|
       format.html { redirect_to professional_appointments_url, notice: "Se ha cancelado el turno." }
@@ -100,5 +77,19 @@ class AppointmentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def appointment_params
       params.require(:appointment).permit(:first_name, :last_name, :phone, :note, :date, :professional_id)
+    end
+
+    def redirect_if_not_logged
+      if session[:user_id].nil?
+        redirect_to login_path
+      end
+    end
+
+    def redirect_if_not_logged_or_has_consulta_role
+      if session[:user_id].nil?
+        redirect_to login_path
+      else current_user.role.name == "Consulta"
+        redirect_to root_path
+      end
     end
 end
