@@ -6,7 +6,6 @@ class AppointmentsController < ApplicationController
   def index
     redirect_if_not_logged
     @appointments = @professional.appointments.order('date DESC')
-    end
   end
 
   # GET /appointments/1 or /appointments/1.json
@@ -88,7 +87,7 @@ class AppointmentsController < ApplicationController
     def redirect_if_not_logged_or_has_consulta_role
       if session[:user_id].nil?
         redirect_to login_path
-      else current_user.role.name == "Consulta"
+      elsif current_user.role.name == "Consulta"
         redirect_to root_path
       end
     end

@@ -77,8 +77,8 @@ class UsersController < ApplicationController
     def redirect_if_not_logged_or_not_admin
       if session[:user_id].nil?
         redirect_to login_path
-      else current_user.role.name != "Administracion"
-        redirect_to_root_path
+      elsif current_user.role.name != "Administracion"
+        redirect_to root_path
       end
     end
 end
