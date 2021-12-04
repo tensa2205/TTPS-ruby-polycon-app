@@ -4,6 +4,7 @@
 <p> 
   <%= link_to 'Pedir turno', new_professional_appointment_path(@professional), class: "btn btn-primary my-2 margin-button" %>
   <%= link_to 'Volver', professionals_path,  class: "btn btn-secondary my-2" %>
+  <%= link_to 'Exportar turnos', professional_export_appointments_path(@professional), class: "btn btn-success float-end my-2 margin-button"  %>
 </p>
 <table class="table">
   <thead class="thead-dark">
@@ -32,7 +33,6 @@
             <%= link_to 'Editar', edit_professional_appointment_path(@professional, appointment), class: "btn btn btn-sm", style: "background-color: #6d04d6; color: white" %>
             <%= link_to 'Cancelar turno', [@professional, appointment], method: :delete, data: { confirm: 'Estás seguro de querer cancelar el turno?' }, class: "btn btn-danger btn-sm"  %>
           <% end %>
-          
         </td>
       </tr>
     <% end %>

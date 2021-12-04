@@ -1,0 +1,7 @@
+<%= render "layouts/navbar.html.erb"%>
+
+<h1>Exportando los turnos del profesional <%= @professional.full_name %>...</h1>
+
+<%= render 'form', {url: professional_export_appointments_path(@professional)} %>
+
+<%= link_to 'Volver', professional_appointments_path(@professional), class: "btn btn-secondary", style: "margin-left: 25px; margin-top:10px"   %>

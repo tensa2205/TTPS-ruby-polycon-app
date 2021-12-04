@@ -1,0 +1,21 @@
+<%= form_with(url: url, method: 'get', local: true, scope: :export) do |f| %>
+
+<div class="field mb-3">
+    <%= f.label "Fecha", class: "form-label col-1", style: "margin-left: 25px" %>
+    <%= f.text_field :date,
+    data: {
+      controller: "flatpickr",
+      flatpickr_date_format: "Y-m-d H:i",
+    } %>
+  </div>
+
+<div class="field mb-3">
+    <%= f.label "¿Semanal?", class: "form-label col-1", style: "margin-left: 25px" %> 
+    <%= f.check_box :week  %>
+</div>
+
+<div class="actions">
+  <%= f.submit "Obtener turnos", class: "btn btn-primary" %>
+</div>
+
+<% end %>

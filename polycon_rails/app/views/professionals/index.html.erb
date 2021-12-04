@@ -4,7 +4,7 @@
 <p> 
   <%= link_to 'Contratar profesional', new_professional_path, class: "btn btn-primary my-2 margin-button"%>
   <%= link_to 'Volver', root_path,  class: "btn btn-secondary my-2" %>
-  <%= link_to 'Exportar turnos', logout_path, method: "delete" , class: "btn btn-success float-end my-2 margin-button" %>
+  <%= link_to 'Exportar turnos', export_all_path, class: "btn btn-success float-end my-2 margin-button" %>
 </p>
 <div class="alert alert-info" role="alert">
   No se puede despedir a profesionales que tengan turnos pendientes
