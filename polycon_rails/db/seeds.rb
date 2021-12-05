@@ -8,14 +8,14 @@
 
 if Rails.env.development? #Generar datos para ambiente de desarrollo
     roles = Role.create([
-        {name: 'Administración'},
+        {name: 'Administracion'},
         {name: 'Asistencia'},
         {name: 'Consulta'}
     ])
     users = User.create([
-        {role: roles[0], name: 'Admin User', password: 'root'},
-        {role: roles[1], name: 'Assistant User', password: 'assist'},
-        {role: roles[2], name: 'Consultant User', password: 'consultor'}
+        {role: roles[0], name: 'Admin', password: 'root'},
+        {role: roles[1], name: 'Assistant', password: 'asistente'},
+        {role: roles[2], name: 'Consultant', password: 'consultor'}
     ])
 end
 
