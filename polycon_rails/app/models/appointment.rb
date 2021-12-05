@@ -7,7 +7,7 @@ class Appointment < ApplicationRecord
   def correct_minutes
     if date.present?
       minute = date.min
-      errors.add(:date, "minutes should be 0 or 30") unless [0, 30].include? minute 
+      errors.add(:date, ": los minutos deberian ser 0 o 30") unless [0, 30].include? minute 
     end
   end
 
@@ -15,7 +15,7 @@ class Appointment < ApplicationRecord
     if date.present?
       pro_appointment = Appointment.where("professional_id = ?", professional_id).where("date BETWEEN ? AND ?", date.beginning_of_day, date.end_of_day).where("date = ?", date).first
       if !pro_appointment.nil?
-        errors.add(:date, "and hour/minutes already occupied") unless id == pro_appointment.id
+        errors.add(:date, "y hora/minutos ya ocupados por otro turno") unless id == pro_appointment.id
       end
     end
   end
