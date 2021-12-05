@@ -14,7 +14,9 @@ class Appointment < ApplicationRecord
   def check_availability
     if date.present?
       pro_appointment = Appointment.where("professional_id = ?", professional_id).where("date BETWEEN ? AND ?", date.beginning_of_day, date.end_of_day).where("date = ?", date).first
-      errors.add(:date, "and hour/minutes already occupied") unless pro_appointment.nil?
+      if !pro_appointment.nil?
+        errors.add(:date, "and hour/minutes already occupied") unless id == pro_appointment.id
+      end
     end
   end
 
