@@ -30,7 +30,7 @@ class ProfessionalsController < ApplicationController
 
     respond_to do |format|
       if @professional.save
-        format.html { redirect_to @professional, notice: "Professional was successfully created." }
+        format.html { redirect_to @professional, notice: "Profesional contratado." }
         format.json { render :show, status: :created, location: @professional }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -44,7 +44,7 @@ class ProfessionalsController < ApplicationController
     redirect_if_not_logged_or_not_admin
     respond_to do |format|
       if @professional.update(professional_params)
-        format.html { redirect_to @professional, notice: "Professional was successfully updated." }
+        format.html { redirect_to @professional, notice: "Profesional actualizado correctamente." }
         format.json { render :show, status: :ok, location: @professional }
       else
         format.html { render :edit, status: :unprocessable_entity }

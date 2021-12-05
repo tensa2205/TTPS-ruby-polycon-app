@@ -31,7 +31,7 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if @appointment.save
-        format.html { redirect_to [@professional, @appointment], notice: "Appointment was successfully created." }
+        format.html { redirect_to [@professional, @appointment], notice: "El turno fue creado correctamente." }
         format.json { render :show, status: :created, location: [@professional, @appointment] }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ class AppointmentsController < ApplicationController
     redirect_if_not_logged_or_has_consulta_role
       respond_to do |format|
       if @appointment.update(appointment_params)
-        format.html { redirect_to [@professional, @appointment], notice: "Appointment was successfully updated." }
+        format.html { redirect_to [@professional, @appointment], notice: "El turno fue actualizado correctamente." }
         format.json { render :show, status: :ok, location: [@professional, @appointment] }
       else
         format.html { render :edit, status: :unprocessable_entity }
