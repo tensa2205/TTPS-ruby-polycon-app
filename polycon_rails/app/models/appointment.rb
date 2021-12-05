@@ -1,6 +1,7 @@
 class Appointment < ApplicationRecord
   belongs_to :professional
-  validates :first_name, :last_name, :phone, :date, presence: true
+  validates :first_name, :last_name, :phone, :date, presence: {message: "no puede estar en blanco"}
+  validates :phone, format: { with: /\A\d+\z/, message: "solo numeros. No se permiten signos." }
   validate :correct_minutes, :check_availability
 
   def correct_minutes

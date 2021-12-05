@@ -1,7 +1,7 @@
 <%= form_with(model: professional) do |form| %>
   <% if professional.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(professional.errors.count, "error") %> prohibited this professional from being saved:</h2>
+      <h2><%= professional.errors.count %> error prohibe que este profesional se guarde:</h2>
 
       <ul>
         <% professional.errors.each do |error| %>
@@ -12,8 +12,8 @@
   <% end %>
 
   <div class="field mb-3">
-    <%= form.label :full_name, class: "form-label", style: "margin-left: 25px"%>
-    <%= form.text_field :full_name, class: "form-control" %>
+    <%= form.label "Nombre completo: ", class: "form-label col-1", style: "margin-left: 25px"%>
+    <%= form.text_field :full_name, class: "col-3" %>
   </div>
 
   <div class="actions">

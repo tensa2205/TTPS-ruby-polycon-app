@@ -1,7 +1,7 @@
 <%= form_with(model: [professional, appointment]) do |form| %>
   <% if appointment.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+      <h2><%= pluralize(appointment.errors.count, "errores") %> prohiben que este turno se guarde:</h2>
 
       <ul>
         <% appointment.errors.each do |error| %>
@@ -16,27 +16,27 @@
 <div style="margin-top: 100px  ">
 
   <div class="field mb-3">
-    <%= form.label :first_name, class: "form-label col-1", style: "margin-left: 25px" %>
+    <%= form.label "Nombre del paciente: ", class: "form-label col-1", style: "margin-left: 25px" %>
     <%= form.text_field :first_name, class: "col-3" %>
   </div>
 
   <div class="field mb-3">
-    <%= form.label :last_name, class: "form-label col-1", style: "margin-left: 25px" %>
+    <%= form.label "Apellido del paciente: ", class: "form-label col-1", style: "margin-left: 25px" %>
     <%= form.text_field :last_name, class: "col-3" %>
   </div>
 
   <div class="field mb-3">
-    <%= form.label :phone, class: "form-label col-1", style: "margin-left: 25px" %>
+    <%= form.label "Telefono del paciente: ", class: "form-label col-1", style: "margin-left: 25px" %>
     <%= form.text_field :phone, class: "col-3" %>
   </div>
 
   <div class="field mb-3">
-    <%= form.label :note, class: "form-label col-1", style: "margin-left: 25px" %>
+    <%= form.label "Notas adicionales del turno: ", class: "form-label col-1", style: "margin-left: 25px" %>
     <%= form.text_field :note, class: "col-3" %>
   </div>
 
   <div class="field mb-3">
-    <%= form.label :date, class: "form-label col-1", style: "margin-left: 25px" %>
+    <%= form.label "Fecha/Hora del turno: ", class: "form-label col-1", style: "margin-left: 25px" %>
     <%= form.text_field :date,
     data: {
       controller: "flatpickr",
