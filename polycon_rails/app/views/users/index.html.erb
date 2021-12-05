@@ -26,7 +26,9 @@
         <td>
           <%= link_to 'Detalle', user, class: "btn btn-info btn-sm" %>
           <%= link_to 'Editar', edit_user_path(user), class: "btn btn btn-sm", style: "background-color: #6d04d6; color: white" %>
-          <%= link_to 'Borrar', user, method: :delete, data: { confirm: 'Estás seguro de querer eliminar este usuario?' }, class: "btn btn-danger btn-sm"  %>
+          <% if current_user != user %>
+            <%= link_to 'Borrar', user, method: :delete, data: { confirm: 'Estás seguro de querer eliminar este usuario?' }, class: "btn btn-danger btn-sm"  %>
+          <% end %>
         </td>
       </tr>
     <% end %>
