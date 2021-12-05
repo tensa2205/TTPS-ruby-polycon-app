@@ -1,5 +1,6 @@
 class ExportController < ApplicationController
     before_action :set_professional, only: %i[ export_professional ]
+
     def export_professional
         if params.include?(:export) && !params[:export][:date].blank?
             date = params[:export][:date].to_date
@@ -17,9 +18,11 @@ class ExportController < ApplicationController
 
             AppointmentsUtils.get_appointments_associated_with_days(range, appointments)
             data_to_table = AppointmentsUtils.create_appointments_day_array(range)
-            TableCreator.export_template_result(data_to_table, TimeRange.get_time_ranges)
+            file_path = TableCreator.export_template_result(data_to_table, TimeRange.get_time_ranges)
             
-            redirect_to root_path
+            #redirect_to root_path
+            #Descarga del archivo
+            download(file_path)
         else
             render 'professional_only'   
         end
@@ -43,17 +46,17 @@ class ExportController < ApplicationController
             AppointmentsUtils.get_appointments_associated_with_days(range, appointments)
             data_to_table = AppointmentsUtils.create_appointments_day_array(range) 
             file_path = TableCreator.export_template_result(data_to_table, TimeRange.get_time_ranges)
-            download(file_path)
 
-            redirect_to root_path
+            #redirect_to root_path
+            #Descarga del archivo
+            download(file_path)
         else
             render 'all'   
         end
     end
 
     def download(path)
-        #send_file(path, :type => 'application/html', :disposition => 'attachment; filename=test.html', x_sendfile: true)
-        send_file path
+        send_file(path, :type => 'application/html', :disposition => 'attachment')
     end
     
     private
