@@ -16,4 +16,14 @@ class Appointment < ApplicationRecord
       errors.add(:date, "and hour/minutes already occupied") unless pro_appointment.nil?
     end
   end
+
+  def to_table
+    "   Profesional : %s  <br>
+        Nombre del paciente: %s  <br>
+        Apellido del paciente: %s  <br>
+        Telefono del paciente: %s  <br>
+        Notas del turno : %s <br>
+        ------------------------- <br>
+    " % [professional.full_name, first_name, last_name, phone, note]
+  end
 end
