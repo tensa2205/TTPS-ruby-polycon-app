@@ -52,10 +52,8 @@ class ExportController < ApplicationController
     end
 
     def download(path)
-        send_file(path,
-            :type => 'application/pdf/docx/html/htm/doc',
-            :disposition => 'attachment',
-            :filename => "test.html")
+        #send_file(path, :type => 'application/html', :disposition => 'attachment; filename=test.html', x_sendfile: true)
+        send_file path
     end
     
     private

@@ -81,7 +81,6 @@ module TableCreator
         template_res = produce_template_result(appointments, hours)
         file_name = DateTime.now().to_s + ".html"
         path = File.expand_path('../../../', __FILE__) + "/public/reports/" + file_name
-        puts path.class
         File.open(path ,'w') do |f|
             f.write(template_res)
         end
